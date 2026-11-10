@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 
 def package_name(value):
-    """Проверить имя пакета Maven или тестового пакета."""
+    """Проверить имя пакета."""
     pattern = r"[A-Za-z0-9_.-]+(:[A-Za-z0-9_.-]+)?"
     if not re.fullmatch(pattern, value):
         raise argparse.ArgumentTypeError(
@@ -17,14 +17,14 @@ def package_name(value):
 
 
 def version_name(value):
-    """Проверить версию пакета."""
+    """Проверить версию."""
     if not re.fullmatch(r"[A-Za-z0-9_.-]+", value):
         raise argparse.ArgumentTypeError("Некорректная версия")
     return value
 
 
 def output_name(value):
-    """Проверить имя выходного SVG-файла."""
+    """Проверить имя SVG-файла."""
     path = Path(value)
     if path.suffix.lower() != ".svg" or path.name != value:
         raise argparse.ArgumentTypeError(
@@ -34,7 +34,7 @@ def output_name(value):
 
 
 def make_parser():
-    """Создать обработчик аргументов."""
+    """Создать аргументы командной строки."""
     parser = argparse.ArgumentParser(
         description="Анализ зависимостей Maven"
     )
@@ -50,6 +50,7 @@ def make_parser():
         "--output", default="graph.svg", type=output_name
     )
     parser.add_argument("--ascii", action="store_true")
+    parser.add_argument("--reverse", action="store_true")
     return parser
 
 
