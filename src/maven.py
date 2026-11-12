@@ -2,7 +2,7 @@
 
 import urllib.error
 import urllib.request
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as element_tree
 
 
 def pom_url(repository, package, version):
@@ -62,8 +62,8 @@ def resolve(value, properties):
 def parse_pom(content):
     """Извлечь прямые зависимости из XML."""
     try:
-        root = ET.fromstring(content)
-    except ET.ParseError as error:
+        root = element_tree.fromstring(content)
+    except element_tree.ParseError as error:
         raise ValueError("Некорректный XML POM") from error
 
     properties = get_properties(root)
